@@ -49,8 +49,8 @@ void loop()
       digitalWrite(dir_b, HIGH);
       digitalWrite(dir_c, HIGH); //ruote di sinistra  //cavo invertito (mannaggia a te)
       digitalWrite(dir_d, LOW);
-  } else if( toInt(data) >= 190 && toInt(data) <= 255){
-      setVelocity(toInt(s));
+  } else if( data.toInt() >= 190 && data.toInt() <= 255){
+      setVelocity(data.toInt());
   } else if(data == "spegni"){
       setVelocity(0);
   } else if(data == "accendi"){
@@ -71,3 +71,4 @@ void setVelocity(int v){
 
   return;
 }
+
