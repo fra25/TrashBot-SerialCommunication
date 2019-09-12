@@ -19,7 +19,7 @@ print('- Inserire un numero tra 90 e 255 per cambiare la velocità')
 print('- Inserire "ESC" per uscire\n\n')
 
 while True:
-    toWrite = input("Cose da mandare -->")
+    toWrite = input("Cose da mandare --> ")
     if toWrite == "ESC":
         serial.close()
 	    sys.exit()
