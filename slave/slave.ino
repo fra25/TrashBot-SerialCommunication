@@ -15,6 +15,7 @@ void setup(){
 
   Serial.begin(9600);
   while(!Serial);
+  
   pinMode(LED_BUILTIN, OUTPUT);
 
   pinMode(pwm_a, OUTPUT);  //Set control pins to be outputs
@@ -31,16 +32,23 @@ void setup(){
 
 }
 
-void loop()
-{
+void loop(){
+  
+  String data = "";
+  
   digitalWrite(dir_a, HIGH);
   digitalWrite(dir_b, HIGH);
   digitalWrite(dir_c, HIGH); 
   digitalWrite(dir_d, HIGH);
 
-  String data = Serial.readString();
+  data = Serial.readString();
 
-  if(data == "destra"){
+  if(data == "dritto"){
+      digitalWrite(dir_a, HIGH);
+      digitalWrite(dir_b, HIGH);
+      digitalWrite(dir_c, HIGH); 
+      digitalWrite(dir_d, HIGH);
+  } else if(data == "destra"){
       digitalWrite(dir_a, LOW);   //ruote di destra
       digitalWrite(dir_b, LOW);
       digitalWrite(dir_c, HIGH); 
@@ -50,19 +58,20 @@ void loop()
       digitalWrite(dir_b, HIGH);
       digitalWrite(dir_c, LOW); //ruote di sinistra  
       digitalWrite(dir_d, LOW);
-  } else if(data.toInt() >= 190 && data.toInt() <= 255){
+  } else if(data.toInt() >= 90 && data.toInt() <= 255){
       setVelocity(data.toInt());
   } else if(data == "spegni"){
       setVelocity(0);
   } else if(data == "accendi"){
       setVelocity(190);
   }
+ 
 }
 
 //inserire solo velocità tra 190 e 255, altrimenti la funzione non cambierà lo stato del motore
 void setVelocity(int v){
 
-  if((v < 190 && v != 0) || v > 255)
+  if((v < 90 && v != 0) || v > 255)
     return;
 
   analogWrite(pwm_a, v);  
@@ -72,4 +81,3 @@ void setVelocity(int v){
 
   return;
 }
-
