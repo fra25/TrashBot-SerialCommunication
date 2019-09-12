@@ -1,4 +1,4 @@
-int pwm_a = 6;  //PWM control 
+ int pwm_a = 6;  //PWM control 
 int pwm_b = 9;  
 int pwm_c = 5;
 int pwm_d = 3;
@@ -41,32 +41,88 @@ void loop(){
   digitalWrite(dir_c, HIGH); 
   digitalWrite(dir_d, HIGH);
 
-  data = Serial.readString();
-
-  if(data == "dritto"){
+  while(Serial.available() > 0){
+    data = Serial.readString();
+  
+    if(data == "dritto"){
+        setVelocity(0);
+        digitalWrite(dir_a, HIGH);
+        digitalWrite(dir_b, HIGH);
+        digitalWrite(dir_c, HIGH); 
+        digitalWrite(dir_d, HIGH);
+        setVelocity(190);
+        Serial.println("Vado dritto");
+    }
+    
+    else if(data == "destra"){
+        setVelocity(0);  
+        digitalWrite(dir_a, LOW);   //ruote di destra
+        digitalWrite(dir_b, LOW);
+        digitalWrite(dir_c, HIGH); 
+        digitalWrite(dir_d, HIGH);
+        setVelocity(190);
+        Serial.println("Svolto a destra");
+    }
+    
+    else if(data == "sinistra"){
+        setVelocity(0);
+        digitalWrite(dir_a, HIGH);
+        digitalWrite(dir_b, HIGH);
+        digitalWrite(dir_c, LOW); //ruote di sinistra  
+        digitalWrite(dir_d, LOW);
+        setVelocity(190);        
+        Serial.println("Svolto a sinistra");
+    }
+    
+    else if(data.toInt() >= 90 && data.toInt() <= 255){
+        setVelocity(data.toInt());
+        Serial.println(data);
+    }
+    
+    else if(data == "spegni"){
+        setVelocity(0);
+        Serial.println("Spengo i motori");
+    }
+    
+    else if(data == "accendi"){
+        setVelocity(190);
+        Serial.println("Accendo i motori");
+    } 
+    
+    else {
+      Serial.println("Comando non riconosciuto: " + data);
+    }
+  }
+}
+/*
+void loop(){
+      setVelocity(0);
       digitalWrite(dir_a, HIGH);
       digitalWrite(dir_b, HIGH);
       digitalWrite(dir_c, HIGH); 
       digitalWrite(dir_d, HIGH);
-  } else if(data == "destra"){
+      setVelocity(190);
+      delay(5000);
+      
+      setVelocity(0);  
       digitalWrite(dir_a, LOW);   //ruote di destra
       digitalWrite(dir_b, LOW);
       digitalWrite(dir_c, HIGH); 
       digitalWrite(dir_d, HIGH);
-  } else if(data == "sinistra"){
+      setVelocity(190);
+      
+      
+      delay(5000);
+      
+      setVelocity(0);
       digitalWrite(dir_a, HIGH);
       digitalWrite(dir_b, HIGH);
       digitalWrite(dir_c, LOW); //ruote di sinistra  
       digitalWrite(dir_d, LOW);
-  } else if(data.toInt() >= 90 && data.toInt() <= 255){
-      setVelocity(data.toInt());
-  } else if(data == "spegni"){
-      setVelocity(0);
-  } else if(data == "accendi"){
       setVelocity(190);
-  }
- 
-}
+      delay(5000);
+
+}*/
 
 //inserire solo velocità tra 190 e 255, altrimenti la funzione non cambierà lo stato del motore
 void setVelocity(int v){
