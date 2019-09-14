@@ -1,15 +1,11 @@
 from serial import Serial
 import sys
+import platform
 
-port = "/dev/tty" #la porta
-
-#port = "COM3"
-
-p = input("inserire l'ultima parte della porta (escluso tty): ")
-
-port += p
-
-
+if platform.system() == "Windows":
+    port = "COM" + input("Inserire il numero della porta di arduino \n-> ") #windows
+else:
+    port = "/dev/tty" + input("Inserire l'ultima parte della porta di arduino (escluso tty) \n-> ")    #prendiamo la seriale di arduino
 
 serial = Serial(port, 9600)
 serial.flushInput()
@@ -31,5 +27,5 @@ while True:
     else:
         serial.write(str.encode(toWrite))
         toRead = serial.readline()
-        if toRead:
-            print(toRead.decode())
+        #if toRead:
+        print(toRead.decode())

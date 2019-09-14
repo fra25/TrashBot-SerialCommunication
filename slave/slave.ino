@@ -1,3 +1,5 @@
+#define BAUD 9600
+
 int pwm_a = 6;  //PWM control 
 int pwm_b = 9;  
 int pwm_c = 5;
@@ -13,7 +15,7 @@ int dir_d = 10; //Motore anteriore sinistro
 
 void setup(){
 
-  Serial.begin(9600);
+  Serial.begin(BAUD);
   while(!Serial);
   
   pinMode(LED_BUILTIN, OUTPUT);
@@ -75,7 +77,7 @@ void loop(){
     
     else if(data.toInt() >= 90 && data.toInt() <= 255){
         setVelocity(data.toInt());
-        Serial.println(data);
+        Serial.println("cambiata velocità a: " + data);
     }
     
     else if(data == "spegni"){
