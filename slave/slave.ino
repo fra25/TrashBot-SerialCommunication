@@ -93,35 +93,7 @@ void loop(){
     }
   }
 }
-/*
-void loop(){
-      setVelocity(0);
-      digitalWrite(dir_a, HIGH);
-      digitalWrite(dir_b, HIGH);
-      digitalWrite(dir_c, HIGH); 
-      digitalWrite(dir_d, HIGH);
-      setVelocity(190);
-      delay(5000);
-      
-      setVelocity(0);  
-      digitalWrite(dir_a, LOW);   //ruote di destra
-      digitalWrite(dir_b, LOW);
-      digitalWrite(dir_c, HIGH); 
-      digitalWrite(dir_d, HIGH);
-      setVelocity(190);
-      
-      
-      delay(5000);
-      
-      setVelocity(0);
-      digitalWrite(dir_a, HIGH);
-      digitalWrite(dir_b, HIGH);
-      digitalWrite(dir_c, LOW); //ruote di sinistra  
-      digitalWrite(dir_d, LOW);
-      setVelocity(190);
-      delay(5000);
 
-}*/
 
 //inserire solo velocità tra 190 e 255, altrimenti la funzione non cambierà lo stato del motore
 void setVelocity(int v){
