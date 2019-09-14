@@ -1,4 +1,4 @@
- int pwm_a = 6;  //PWM control 
+int pwm_a = 6;  //PWM control 
 int pwm_b = 9;  
 int pwm_c = 5;
 int pwm_d = 3;
@@ -28,50 +28,49 @@ void setup(){
   pinMode(dir_c, OUTPUT);
   pinMode(dir_d, OUTPUT);
 
-  setVelocity(200);
+  setVelocity(0);
 
 }
 
 void loop(){
   
   String data = "";
-  
-  digitalWrite(dir_a, HIGH);
-  digitalWrite(dir_b, HIGH);
-  digitalWrite(dir_c, HIGH); 
-  digitalWrite(dir_d, HIGH);
+ 
 
   while(Serial.available() > 0){
     data = Serial.readString();
   
     if(data == "dritto"){
-        setVelocity(0);
         digitalWrite(dir_a, HIGH);
         digitalWrite(dir_b, HIGH);
         digitalWrite(dir_c, HIGH); 
         digitalWrite(dir_d, HIGH);
-        setVelocity(190);
         Serial.println("Vado dritto");
     }
     
     else if(data == "destra"){
-        setVelocity(0);  
         digitalWrite(dir_a, LOW);   //ruote di destra
         digitalWrite(dir_b, LOW);
         digitalWrite(dir_c, HIGH); 
         digitalWrite(dir_d, HIGH);
-        setVelocity(190);
         Serial.println("Svolto a destra");
+
     }
     
     else if(data == "sinistra"){
-        setVelocity(0);
         digitalWrite(dir_a, HIGH);
         digitalWrite(dir_b, HIGH);
         digitalWrite(dir_c, LOW); //ruote di sinistra  
-        digitalWrite(dir_d, LOW);
-        setVelocity(190);        
+        digitalWrite(dir_d, LOW);  
         Serial.println("Svolto a sinistra");
+    }
+
+    else if(data == "retro"){
+        digitalWrite(dir_a, LOW);
+        digitalWrite(dir_b, LOW);
+        digitalWrite(dir_c, LOW); //ruote di sinistra  
+        digitalWrite(dir_d, LOW);  
+        Serial.println("Torno indietro");
     }
     
     else if(data.toInt() >= 90 && data.toInt() <= 255){
@@ -85,7 +84,7 @@ void loop(){
     }
     
     else if(data == "accendi"){
-        setVelocity(190);
+        setVelocity(230);
         Serial.println("Accendo i motori");
     } 
     

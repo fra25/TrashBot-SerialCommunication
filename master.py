@@ -19,6 +19,7 @@ print('- Inserire "sinistra" per svoltare a sinistra')
 print('- Inserire "spegni" per spegnere')
 print('- Inserire "dritto" per andare dritto')
 print('- Inserire "accendi" per accendere')
+print('- Inserire "retro" per andare in retromarcia')
 print('- Inserire un numero tra 90 e 255 per cambiare la velocita')
 print('- Inserire "ESC" per uscire\n\n')
 
