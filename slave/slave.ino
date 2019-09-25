@@ -96,7 +96,7 @@ void loop(){
         Serial.println("Torno indietro");
     }
     
-    else if(data.toInt() >= 90 && data.toInt() <= 255){
+    else if(data.toInt() <= 255){
         setVelocity(data.toInt());
         Serial.println("cambiata velocità a: " + data);
     }
