@@ -56,18 +56,19 @@ void loop(){
         digitalWrite(dir_b, LOW);
         digitalWrite(dir_c, HIGH); 
         digitalWrite(dir_d, HIGH);
+        setVelocity(velocity);
         Serial.println("Svolto a destra");
 
     }
 
-    else if(data == "destraforse"){
+    else if(data == "gira-destra"){
         analogWrite(pwm_a, velocity -40);  
         analogWrite(pwm_b, velocity -40);
-        digitalWrite(dir_a, LOW);   //ruote di destra
-        digitalWrite(dir_b, LOW);
+        digitalWrite(dir_a, HIGH);   //ruote di destra
+        digitalWrite(dir_b, HIGH);
         digitalWrite(dir_c, HIGH); 
         digitalWrite(dir_d, HIGH);
-        Serial.println("Svolto a destra magica");
+        Serial.println("Giro a destra");
     }
     
     else if(data == "sinistra"){
@@ -75,17 +76,18 @@ void loop(){
         digitalWrite(dir_b, HIGH);
         digitalWrite(dir_c, LOW); //ruote di sinistra  
         digitalWrite(dir_d, LOW);  
+        setVelocity(velocity);
         Serial.println("Svolto a sinistra");
     }
 
-    else if(data == "sinistraforse"){
+    else if(data == "gira-sinistra"){
         analogWrite(pwm_c, velocity -40);  
         analogWrite(pwm_d, velocity -40);
         digitalWrite(dir_a, HIGH);   //ruote di destra
         digitalWrite(dir_b, HIGH);
         digitalWrite(dir_c, LOW); 
         digitalWrite(dir_d, LOW);
-        Serial.println("Svolto a destra magica");
+        Serial.println("giro a sinistra");
     }
     else if(data == "retro"){
         digitalWrite(dir_a, LOW);
@@ -94,11 +96,6 @@ void loop(){
         digitalWrite(dir_d, LOW);
         setVelocity(velocity);
         Serial.println("Torno indietro");
-    }
-    
-    else if(data.toInt() <= 255){
-        setVelocity(data.toInt());
-        Serial.println("cambiata velocità a: " + data);
     }
     
     else if(data == "spegni"){
@@ -110,6 +107,11 @@ void loop(){
         setVelocity(255);
         Serial.println("Accendo i motori");
     } 
+
+    else if(isNum(data) && data.toInt() >=0 && data.toInt() <= 255){
+        setVelocity(data.toInt());
+        Serial.println("cambiata velocità a: " + data);
+    }
     
     else {
       Serial.println("Comando non riconosciuto: " + data);
@@ -132,4 +134,14 @@ void setVelocity(unsigned int v){
   analogWrite(pwm_d, v);
 
   return;
+}
+
+bool isNum(String str){
+
+  for(int i = 0; i < str.length(); i++){
+    if(!isDigit(str[i]))
+      return false;
+  }
+
+  return true;
 }
