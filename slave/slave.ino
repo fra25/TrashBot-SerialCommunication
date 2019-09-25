@@ -11,7 +11,7 @@ int dir_c = 11; //Motore posteriore sinistro
 int dir_d = 10; //Motore anteriore sinistro
 
 
-
+unsigned int velocity = 0;
 
 void setup(){
 
@@ -30,7 +30,7 @@ void setup(){
   pinMode(dir_c, OUTPUT);
   pinMode(dir_d, OUTPUT);
 
-  setVelocity(0);
+  setVelocity(velocity);
 
 }
 
@@ -47,6 +47,7 @@ void loop(){
         digitalWrite(dir_b, HIGH);
         digitalWrite(dir_c, HIGH); 
         digitalWrite(dir_d, HIGH);
+        setVelocity(velocity);
         Serial.println("Vado dritto");
     }
     
@@ -58,6 +59,16 @@ void loop(){
         Serial.println("Svolto a destra");
 
     }
+
+    else if(data == "destraforse"){
+        analogWrite(pwm_a, velocity -40);  
+        analogWrite(pwm_b, velocity -40);
+        digitalWrite(dir_a, LOW);   //ruote di destra
+        digitalWrite(dir_b, LOW);
+        digitalWrite(dir_c, HIGH); 
+        digitalWrite(dir_d, HIGH);
+        Serial.println("Svolto a destra magica");
+    }
     
     else if(data == "sinistra"){
         digitalWrite(dir_a, HIGH);
@@ -67,11 +78,21 @@ void loop(){
         Serial.println("Svolto a sinistra");
     }
 
+    else if(data == "sinistraforse"){
+        analogWrite(pwm_c, velocity -40);  
+        analogWrite(pwm_d, velocity -40);
+        digitalWrite(dir_a, HIGH);   //ruote di destra
+        digitalWrite(dir_b, HIGH);
+        digitalWrite(dir_c, LOW); 
+        digitalWrite(dir_d, LOW);
+        Serial.println("Svolto a destra magica");
+    }
     else if(data == "retro"){
         digitalWrite(dir_a, LOW);
         digitalWrite(dir_b, LOW);
         digitalWrite(dir_c, LOW); //ruote di sinistra  
-        digitalWrite(dir_d, LOW);  
+        digitalWrite(dir_d, LOW);
+        setVelocity(velocity);
         Serial.println("Torno indietro");
     }
     
@@ -86,7 +107,7 @@ void loop(){
     }
     
     else if(data == "accendi"){
-        setVelocity(230);
+        setVelocity(255);
         Serial.println("Accendo i motori");
     } 
     
@@ -97,10 +118,12 @@ void loop(){
 }
 
 
-//inserire solo velocità tra 190 e 255, altrimenti la funzione non cambierà lo stato del motore
-void setVelocity(int v){
+//inserire solo velocità tra 0 e 255, altrimenti la funzione non cambierà lo stato del motore
+void setVelocity(unsigned int v){
 
-  if((v < 90 && v != 0) || v > 255)
+  velocity = v;
+  
+  if(v > 255)
     return;
 
   analogWrite(pwm_a, v);  
