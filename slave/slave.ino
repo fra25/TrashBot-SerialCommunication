@@ -5,6 +5,8 @@ int pwm_b = 9;
 int pwm_c = 5;
 int pwm_d = 3;
 
+int led_freni = A0;
+
 int dir_a = 7;  //Motore posteriore destro
 int dir_b = 8;  //Motore anteriore destro
 int dir_c = 11; //Motore posteriore sinistro
@@ -30,6 +32,8 @@ void setup(){
   pinMode(dir_c, OUTPUT);
   pinMode(dir_d, OUTPUT);
 
+  pinMode(led_freni, OUTPUT);
+  
   setVelocity(velocity);
 
 }
@@ -48,6 +52,7 @@ void loop(){
         digitalWrite(dir_c, HIGH); 
         digitalWrite(dir_d, HIGH);
         setVelocity(velocity);
+        digitalWrite(led_freni, LOW);
         Serial.println("Vado dritto");
     }
     
@@ -57,6 +62,7 @@ void loop(){
         digitalWrite(dir_c, HIGH); 
         digitalWrite(dir_d, HIGH);
         setVelocity(velocity);
+        digitalWrite(led_freni, LOW);
         Serial.println("Svolto a destra");
 
     }
@@ -68,6 +74,7 @@ void loop(){
         digitalWrite(dir_b, HIGH);
         digitalWrite(dir_c, HIGH); 
         digitalWrite(dir_d, HIGH);
+        digitalWrite(led_freni, LOW);
         Serial.println("Giro a destra");
     }
     
@@ -77,6 +84,7 @@ void loop(){
         digitalWrite(dir_c, LOW); //ruote di sinistra  
         digitalWrite(dir_d, LOW);  
         setVelocity(velocity);
+        digitalWrite(led_freni, LOW);
         Serial.println("Svolto a sinistra");
     }
 
@@ -87,6 +95,7 @@ void loop(){
         digitalWrite(dir_b, HIGH);
         digitalWrite(dir_c, LOW); 
         digitalWrite(dir_d, LOW);
+        digitalWrite(led_freni, LOW);
         Serial.println("giro a sinistra");
     }
     else if(data == "retro"){
@@ -95,16 +104,22 @@ void loop(){
         digitalWrite(dir_c, LOW); //ruote di sinistra  
         digitalWrite(dir_d, LOW);
         setVelocity(velocity);
+        digitalWrite(led_freni, HIGH);
+        delay(250);
+        digitalWrite(led_freni, LOW);
+        delay(250);
         Serial.println("Torno indietro");
     }
     
     else if(data == "spegni"){
         setVelocity(0);
+        digitalWrite(led_freni, HIGH);
         Serial.println("Spengo i motori");
     }
     
     else if(data == "accendi"){
         setVelocity(255);
+        digitalWrite(led_freni, LOW);
         Serial.println("Accendo i motori");
     } 
 
